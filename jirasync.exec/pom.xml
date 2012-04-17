@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>build.parent</artifactId>
+    <groupId>com.cgu.audit</groupId>
+    <version>1.0</version>
+  </parent>
+  <groupId>com.cgu.icc</groupId>
+  <artifactId>jirasync.exec</artifactId>
+  <version>1.0</version>
+  <name>jirasync.exec</name>
+  <description>Jira Project sync execution</description>
+  <!-- 
+  <dependencies>
+
+  	<dependency>
+  		<groupId>com.cgu.icc</groupId>
+  		<artifactId>project-jirasync</artifactId>
+  		<version>1.0</version>
+  		<scope>runtime</scope>
+  	</dependency>
+  </dependencies>
+  -->
+<profiles>
+		<profile>
+			<id>runLoaderClient</id>
+			<dependencies>
+				<dependency>
+  		<groupId>com.cgu.icc</groupId>
+  		<artifactId>project-jirasync</artifactId>
+  		<version>1.0</version>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
+<build>
+				<defaultGoal>verify</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>java</goal>
+								</goals>
+								<configuration>
+          <mainClass>com.cgu.icc.sync.MicrosoftProjectJiraSynchronise</mainClass>
+
+									<classpathScope>runtime</classpathScope>
+									<arguments>
+										<argument>${loader.file}</argument>
+										<argument>${Range.EndDate}</argument>
+										<!-- 
+										<argument>${send.interval}</argument>
+										<argument>${loader.category}</argument>
+									 -->
+									</arguments>
+							<systemProperties>
+							  <systemProperty>
+							    <key>jirauser</key>
+							    <value>${jira.user}</value>
+							    </systemProperty>
+							    							  <systemProperty>
+							    <key>jirapass</key>
+							    <value>${jira.pass}</value>
+							    </systemProperty>
+							    				  <systemProperty>
+							    <key>jiraurl</key>
+							    <value>${jira.url}</value>
+							    </systemProperty>
+							</systemProperties>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+</profile>
+</profiles>
+</project>
